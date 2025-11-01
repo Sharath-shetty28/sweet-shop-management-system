@@ -6,6 +6,11 @@
     "dev": "nodemon server.js",
     "test": "jest --detectOpenHandles --runInBand"
   },
+  "jest": {
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    }
+  },
   "keywords": [],
   "type": "module",
   "author": "",
