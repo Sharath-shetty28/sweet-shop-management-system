@@ -4,6 +4,16 @@ import Sweet from "../models/sweet.js";
 export const addSweet = async (req, res) => {
   try {
     const { name, category, price, quantity, description } = req.body;
+
+    if (!name || !category || !price || !quantity)
+      return res
+        .status(400)
+        .json({ message: "Please provide all required fields" });
+
+    if (price < 0 || quantity < 0) {
+      return res.status(400).json({ message: "Invalid price or quantity" });
+    }
+
     const exists = await Sweet.findOne({ name });
     if (exists)
       return res.status(400).json({ message: "Sweet with same name exists" });
@@ -24,6 +34,9 @@ export const addSweet = async (req, res) => {
 export const listSweets = async (req, res) => {
   try {
     const sweets = await Sweet.find().sort({ createdAt: -1 });
+    if (!sweets || sweets.length === 0) {
+      return res.status(404).json({ message: "No sweets found" });
+    }
     res.json(sweets);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -33,6 +46,7 @@ export const listSweets = async (req, res) => {
 export const searchSweets = async (req, res) => {
   try {
     const { q, category, minPrice, maxPrice } = req.query;
+
     const filter = {};
     if (q) filter.name = { $regex: q, $options: "i" };
     if (category) filter.category = category;

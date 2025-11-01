@@ -11,8 +11,6 @@ dotenv.config();
 
 const api = request(app);
 
-
-
 let userToken;
 let adminToken;
 let sweetId;
