@@ -3,7 +3,7 @@ import request from "supertest";
 import mongoose from "mongoose";
 import app from "../app.js";
 import User from "../models/user.js";
-// import Sweet from "../models/Sweet.js";
+import Sweet from "../models/sweet.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
@@ -11,13 +11,15 @@ dotenv.config();
 
 const api = request(app);
 
+
+
 let userToken;
 let adminToken;
 let sweetId;
 
 beforeAll(async () => {
   // Connect to test DB (ensure MONGO_URI_TEST exists in .env)
-  await mongoose.connect(process.env.MONGO_URI_TEST, {});
+  await mongoose.connect(process.env.MONGO_URI);
 
   // Create user and admin directly
   await User.deleteMany({});
@@ -44,7 +46,7 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  await mongoose.disconnect();
+  await mongoose.connection.close();
 });
 
 describe("Sweets API (Protected)", () => {
