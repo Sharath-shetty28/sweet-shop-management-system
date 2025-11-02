@@ -1,39 +1,141 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
-import { toast } from "react-toastify";
+import { MailIcon, LoaderIcon, LockIcon } from "lucide-react";
+import { Link } from "react-router";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { NotebookIcon, Eye, EyeOff } from "lucide-react";
 
-const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const { login } = useAuth();
+function Login() {
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const { login, isLoggingIn } = useAuth();
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const res = await api.post("/auth/login", { email, password });
-      login(res.data);
-      toast.success("Welcome back!");
-      navigate("/dashboard");
-    } catch (err) {
-      toast.error(err.response?.data?.message || "Login failed");
+
+    if (!formData.email.trim()) {
+      toast.error("Email cannot be empty 🚨");
+      return;
     }
+
+    if (!formData.password.trim()) {
+      toast.error("Password cannot be empty 🚨");
+      return;
+    }
+
+    const result = await login(formData);
+    if (result && result.success) {
+      navigate("/admin");
+      toast.success("Logged in successfully!");
+    } else {
+      toast.error(result.message || "Please try again");
+    }
+
+    setFormData({ email: "", password: "" });
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
-      <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow w-80">
-        <h2 className="text-2xl mb-4 font-bold text-center">Login</h2>
-        <input type="email" placeholder="Email" className="border p-2 w-full mb-3"
-          value={email} onChange={(e) => setEmail(e.target.value)} required />
-        <input type="password" placeholder="Password" className="border p-2 w-full mb-3"
-          value={password} onChange={(e) => setPassword(e.target.value)} required />
-        <button className="bg-blue-500 text-white py-2 w-full rounded hover:bg-blue-600">Login</button>
-      </form>
+    <div className="w-full flex items-center justify-center p-4 bg-slate-900">
+      <div className="relative w-full max-w-6xl md:h-[800px] h-[650px]">
+        <div className="w-full flex flex-col md:flex-row">
+          {/* FORM CLOUMN - LEFT SIDE */}
+          <div className="md:w-1/2 p-8 flex items-center justify-center md:border-r border-slate-600/30">
+            <div className="w-full max-w-md">
+              {/* HEADING TEXT */}
+              <div className="text-center mb-8">
+                <NotebookIcon className="w-12 h-12 mx-auto text-slate-400 mb-4" />
+                <h2 className="text-2xl font-bold text-slate-200 mb-2">
+                  Welcome Back
+                </h2>
+                <p className="text-slate-400">
+                  Login to access to your account
+                </p>
+              </div>
+
+              {/* FORM */}
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {/* EMAIL INPUT */}
+                <div>
+                  <label className="auth-input-label">Email</label>
+                  <div className="relative">
+                    <MailIcon className="auth-input-icon" />
+                    <input
+                      name="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      className="input"
+                      placeholder="johndoe@gmail.com"
+                    />
+                  </div>
+                </div>
+
+                {/* PASSWORD INPUT */}
+                <div>
+                  <label className="auth-input-label">Password</label>
+                  <div className="relative">
+                    <LockIcon className="auth-input-icon" />
+                    <input
+                      aria-label="Password"
+                      autoComplete="current-password"
+                      name="password"
+                      type={showPassword ? "text" : "password"}
+                      value={formData.password}
+                      onChange={handleChange}
+                      className="input"
+                      placeholder="Enter your password"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword((s) => !s)}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 p-1"
+                      aria-pressed={showPassword}
+                      aria-label={
+                        showPassword ? "Hide password" : "Show password"
+                      }
+                    >
+                      {/* Eye icon when hidden; eye-off when visible */}
+                      {showPassword ? (
+                        // eye-off / closed eye
+                        <EyeOff />
+                      ) : (
+                        // eye / open eye
+                        <Eye />
+                      )}
+                    </button>
+                  </div>
+                </div>
+
+                {/* SUBMIT BUTTON */}
+                <button
+                  className="auth-btn"
+                  type="submit"
+                  disabled={isLoggingIn}
+                >
+                  {isLoggingIn ? (
+                    <LoaderIcon className="w-full h-5 animate-spin text-center" />
+                  ) : (
+                    "Sign In"
+                  )}
+                </button>
+              </form>
+
+              <div className="mt-6 text-center gap-2 ">
+                <Link to="/register" className="auth-link">
+                  Don't have an account? Register
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
-};
-
+}
 export default Login;

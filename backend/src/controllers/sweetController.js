@@ -3,7 +3,7 @@ import Sweet from "../models/sweet.js";
 
 export const addSweet = async (req, res) => {
   try {
-    const { name, category, price, quantity, description } = req.body;
+    const { name, category, price, quantity } = req.body;
 
     if (!name || !category || !price || !quantity)
       return res
@@ -23,9 +23,8 @@ export const addSweet = async (req, res) => {
       category,
       price,
       quantity,
-      description,
     });
-    res.status(201).json(sweet);
+    res.status(201).json({ success: true, sweet });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -86,16 +85,16 @@ export const deleteSweet = async (req, res) => {
 
 export const purchaseSweet = async (req, res) => {
   try {
-    const { qty } = req.body;
-    if (!qty || qty <= 0)
+    const { quantity } = req.body;
+    if (!quantity || quantity <= 0)
       return res.status(400).json({ message: "Invalid quantity" });
 
     const sweet = await Sweet.findById(req.params.id);
     if (!sweet) return res.status(404).json({ message: "Sweet not found" });
-    if (sweet.quantity < qty)
+    if (sweet.quantity < quantity)
       return res.status(400).json({ message: "Insufficient stock" });
 
-    sweet.quantity -= Number(qty);
+    sweet.quantity -= Number(quantity);
     await sweet.save();
     res.json({
       message: "Purchase successful",
@@ -108,13 +107,13 @@ export const purchaseSweet = async (req, res) => {
 
 export const restockSweet = async (req, res) => {
   try {
-    const { qty } = req.body;
-    if (!qty || qty <= 0)
+    const { quantity } = req.body;
+    if (!quantity || quantity <= 0)
       return res.status(400).json({ message: "Invalid quantity" });
 
     const sweet = await Sweet.findById(req.params.id);
     if (!sweet) return res.status(404).json({ message: "Sweet not found" });
-    sweet.quantity += Number(qty);
+    sweet.quantity += Number(quantity);
     await sweet.save();
     res.json({ message: "Restock successful", newQuantity: sweet.quantity });
   } catch (err) {

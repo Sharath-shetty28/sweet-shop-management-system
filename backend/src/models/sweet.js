@@ -6,8 +6,8 @@ const sweetSchema = new mongoose.Schema({
   category: { type: String, required: true },
   price: { type: Number, required: true, min: 0 },
   quantity: { type: Number, required: true, min: 0 },
-  description: { type: String, default: "" },
   createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now },
 });
 
 export default mongoose.model("Sweet", sweetSchema);

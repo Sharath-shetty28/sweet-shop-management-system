@@ -1,29 +1,91 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import api from "../api/axios";
 
-const AuthContext = createContext();
+const AuthContext = createContext(null);
+export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem("user")) || null
-  );
+  const [isSigningUp, setIsSigningUp] = useState(false);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [authUser, setAuthUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const login = (data) => {
-    setUser(data);
-    localStorage.setItem("user", JSON.stringify(data));
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const res = await api.get("/auth/is-auth", { withCredentials: true });
+        if (res.data.success) {
+          setAuthUser(res.data.user);
+        }
+      } catch (err) {
+        console.log("Auth check error:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    checkAuth();
+  }, []);
+
+  const register = async (data) => {
+    setIsSigningUp(true);
+    try {
+      const res = await api.post("/auth/register", data);
+      if (!res.data.success) {
+        return { success: false, message: res.data.message };
+      }
+      setAuthUser(res.data.user);
+      return { success: true };
+    } catch (err) {
+      return { success: false, message: err.message || "Signup failed" };
+    } finally {
+      setIsSigningUp(false);
+    }
   };
 
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem("user");
-    toast.info("Logged out");
+  const login = async (data) => {
+    setIsLoggingIn(true);
+    try {
+      const res = await api.post("/auth/login", data);
+      if (res.data.success) {
+        setAuthUser(res.data.user);
+        return { success: true };
+      }
+      return { success: false, message: res.data.message };
+    } catch (err) {
+      console.log("Login error:", err);
+      return { success: false, message: err.message || "Login failed" };
+    } finally {
+      setIsLoggingIn(false);
+    }
+  };
+
+  const logout = async () => {
+    try {
+      await api.post("/auth/logout");
+      setAuthUser(null);
+      toast.success("Logged out successfully!");
+      return { success: true };
+    } catch (err) {
+      toast.error("Logout failed");
+      return { success: false };
+    }
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider
+      value={{
+        loading,
+        register,
+        login,
+        logout,
+        isLoggingIn,
+        isSigningUp,
+        authUser,
+        setAuthUser,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
 };
-
-export const useAuth = () => useContext(AuthContext);

@@ -45,7 +45,7 @@ const AdminPanel = () => {
 
   return (
     <div className="p-6">
-      <h2 className="text-2xl font-bold mb-4">Admin Panel</h2>
+      <h2 className="text-2xl font-bold mb-4 ">Admin Panel</h2>
       <form
         onSubmit={handleAdd}
         className="mb-6 grid grid-cols-2 gap-2 max-w-lg"
@@ -65,7 +65,7 @@ const AdminPanel = () => {
         </button>
       </form>
 
-      <h3 className="font-semibold mb-2">Existing Sweets:</h3>
+      <h3 className="font-semibold mb-2 ">Existing Sweets:</h3>
       {sweets.map((s) => (
         <div key={s._id} className="border p-2 mb-2 flex justify-between">
           <div>
