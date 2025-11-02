@@ -4,17 +4,18 @@ import { toast } from "react-toastify";
 const SweetCard = ({ sweet, user, refresh }) => {
   const purchase = async () => {
     try {
-      await api.post(
-        `/sweets/${sweet._id}/purchase`,
-        { qty: 1 },
-        {
-          headers: { Authorization: `Bearer ${user.token}` },
-        }
-      );
-      toast.success("Purchased successfully!");
-      refresh();
+      const quantity = 1; // Default purchase quantity
+      const res = await api.post(`/sweets/${sweet._id}/purchase`, { quantity });
+      if (res.data.success) {
+        toast.success(res.data.message);
+        refresh();
+      } else {
+        toast.error("Purchase failed. Please try again.");
+      }
     } catch (err) {
-      toast.error(err.response?.data?.message || "Error purchasing");
+      toast.error(
+        err.response?.data?.message || "Purchase failed. Please try again."
+      );
     }
   };
 

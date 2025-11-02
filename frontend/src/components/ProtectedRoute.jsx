@@ -19,12 +19,15 @@ const ProtectedRoute = () => {
   if (!authUser) {
     return <Navigate to="/" replace />;
   }
-
-  if (!isAdmin()) {
-    return <Navigate to="/" replace />;
+  if (isAdmin()) {
+    return <Outlet />;
   }
 
-  return <Outlet />;
+  const currentPath = window.location.pathname;
+  if (currentPath === "/dashboard") {
+    return <Outlet />;
+  }
+  return <Navigate to="/dashboard" replace />;
 };
 
 export default ProtectedRoute;

@@ -105,6 +105,7 @@ export const deleteSweet = async (req, res) => {
 export const purchaseSweet = async (req, res) => {
   try {
     const { quantity } = req.body;
+
     if (!quantity || quantity <= 0)
       return res.status(400).json({ message: "Invalid quantity" });
 
