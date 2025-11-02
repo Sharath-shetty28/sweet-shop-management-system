@@ -1,4 +1,4 @@
-# 🍬 TDD Kata: Sweet Shop Management System
+#  TDD Kata: Sweet Shop Management System
 
 ## 🧁 Objective
 
@@ -23,6 +23,86 @@ It demonstrates skills in **API development**, **database management**, **fronte
 - **Tailwind CSS** for styling
 - **React Toastify** for notifications
 
+---
+
+---
+
+# Folder Structure
+```
++---backend
+|   |   .env
+|   |   babel.config.cjs
+|   |   package-lock.json
+|   |   package.json
+|   |   server.js
+|   |   
+|   \---src
+|       |   app.js
+|       |   
+|       +---config
+|       |       db.js
+|       |       
+|       +---controllers
+|       |       authController.js
+|       |       sweetController.js
+|       |       
+|       +---middlewares
+|       |       authMiddleware.js
+|       |       
+|       +---models
+|       |       purchaseModel.js
+|       |       sweetModel.js
+|       |       userModel.js
+|       |       
+|       +---routes
+|       |       authRoutes.js
+|       |       sweetRoutes.js
+|       |       
+|       +---tests
+|       |       auth.test.js
+|       |       sweet.test.js
+|       |       
+|       \---utils
+|               tokenGenerator.js
+|               
+\---frontend
+    |   .env
+    |   .gitignore
+    |   eslint.config.js
+    |   index.html
+    |   package-lock.json
+    |   package.json
+    |   README.md
+    |   vercel.json
+    |   vite.config.js
+    |   
+    +---public
+    \---src
+        |   App.jsx
+        |   index.css
+        |   main.jsx
+        |   
+        +---api
+        |       axios.js
+        |       
+        +---components
+        |       ProtectedRoute.jsx
+        |       SweetCard.jsx
+        |       SweetSearch.jsx
+        |       
+        +---context
+        |       AuthContext.jsx
+        |       
+        \---pages
+                AdminPanel.jsx
+                Dashboard.jsx
+                Login.jsx
+                NotFound.jsx
+                Register.jsx
+                
+
+
+```
 ---
 
 ## 🧠 Core Features
@@ -116,8 +196,8 @@ Admin Account:
   
 Regular User Account:
 
-Username: sharathshetty301@gmail.com
-Password: shetty
+- Username: sharathshetty301@gmail.com
+- Password: shetty
 
 # 🧩 User Roles
 
@@ -194,5 +274,6 @@ It’s production-ready, modular, and extensible for future enhancements.
 
 Thank you for checking out this project!
 If you liked it, don’t forget to ⭐ the repo — your support means a lot!
+
 
 
