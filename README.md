@@ -109,6 +109,26 @@ npm run dev
 
 # 🖼️ Screenshots
 
+# Register/ Login
+<img width="1671" height="850" alt="image" src="https://github.com/user-attachments/assets/a8dba997-a274-4749-8420-4d8c7a58a060" />
+<img width="1889" height="884" alt="image" src="https://github.com/user-attachments/assets/78bc0e66-470d-4aaf-8b85-3f8a3936403b" />
+
+
+
+
+# Admin
+<img width="1894" height="722" alt="image" src="https://github.com/user-attachments/assets/1823369a-31a3-4353-a6fb-7aeeab1018f6" />
+<img width="1890" height="882" alt="image" src="https://github.com/user-attachments/assets/ff005fb4-4165-48f6-ad2c-a98939a37316" />
+
+# User
+<img width="1890" height="504" alt="image" src="https://github.com/user-attachments/assets/1b2b25fb-aa8f-4fff-bed3-eb91c6efdfa7" />
+<img width="1886" height="809" alt="image" src="https://github.com/user-attachments/assets/1d3c0fb0-4d36-4a1d-b7b1-69727d214f27" />
+<img width="1893" height="851" alt="image" src="https://github.com/user-attachments/assets/10535189-7458-4394-ab25-5cc2e4c573bc" />
+
+
+
+
+
 
 # 🧠 My AI Usage
 
@@ -154,3 +174,4 @@ It’s production-ready, modular, and extensible for future enhancements.
 
 Thank you for checking out this project!
 If you liked it, don’t forget to ⭐ the repo — your support means a lot!
+
