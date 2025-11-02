@@ -27,6 +27,16 @@ export const AuthProvider = ({ children }) => {
     checkAuth();
   }, []);
 
+
+  const isAdmin = () => {
+    try {
+      return authUser && authUser.role === 'admin';
+    } catch (err) {
+      console.log("isAdmin check error:", err);
+      return false;
+    }
+  };
+
   const register = async (data) => {
     setIsSigningUp(true);
     try {
@@ -79,6 +89,7 @@ export const AuthProvider = ({ children }) => {
         register,
         login,
         logout,
+        isAdmin,
         isLoggingIn,
         isSigningUp,
         authUser,

@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
 import api from "../api/axios";
-import { useAuth } from "../context/AuthContext";
 import { toast } from "react-toastify";
+import SweetSearch from "../components/SweetSearch";
 
 const AdminPanel = () => {
-  const { user } = useAuth();
   const [sweets, setSweets] = useState([]);
   const [form, setForm] = useState({
     name: "",
@@ -25,22 +24,79 @@ const AdminPanel = () => {
   const handleAdd = async (e) => {
     e.preventDefault();
     try {
-      await api.post("/sweets", form, {
-        headers: { Authorization: `Bearer ${user.token}` },
-      });
-      toast.success("Sweet added!");
-      fetch();
+      const response = await api.post("/sweets", { ...form });
+      if (response.data.success) {
+        toast.success("Sweet added successfully");
+        setForm({ name: "", category: "", price: "", quantity: "" });
+        fetch();
+      }
     } catch (err) {
-      toast.error(err.response?.data?.message || "Error adding");
+      toast.error("Error adding sweet");
     }
   };
 
   const deleteSweet = async (id) => {
-    await api.delete(`/sweets/${id}`, {
-      headers: { Authorization: `Bearer ${user.token}` },
-    });
-    toast.info("Sweet deleted");
-    fetch();
+    if (!window.confirm("Are you sure you want to delete this sweet?")) {
+      return;
+    }
+    try {
+      const response = await api.delete(`/sweets/${id}`);
+      if (response.data.success) {
+        toast.success("Sweet deleted successfully");
+        fetch();
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error("Error deleting sweet");
+    }
+  };
+
+  const updateSweet = async (id, sweet) => {
+    const newName = prompt("Enter new name:", sweet.name);
+    const newCategory = prompt("Enter new category:", sweet.category);
+    const newPrice = prompt("Enter new price:", sweet.price);
+
+    // 🧠 Validate inputs
+    if (!newName || !newCategory || isNaN(newPrice)) {
+      toast.error("Invalid input — please enter valid details!");
+      return;
+    }
+
+    if (isNaN(newPrice)) return; // Cancelled or invalid input
+    try {
+      const response = await api.put(`/sweets/${id}`, {
+        ...form,
+        name: newName,
+        category: newCategory,
+        price: newPrice,
+      });
+      if (response.data.success) {
+        toast.success("Sweet updated successfully");
+        fetch();
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error("Error updating sweet");
+    }
+  };
+
+  const restockSweet = async (id, sweet) => {
+    const addQuantity = prompt("Enter quantity to restock:", "0");
+    if (isNaN(addQuantity) || addQuantity === null) return;
+
+    try {
+      const response = await api.put(`/sweets/${id}`, {
+        ...sweet,
+        quantity: parseInt(sweet.quantity) + parseInt(addQuantity),
+      });
+      if (response.data.success) {
+        toast.success("Sweet restocked successfully");
+        fetch();
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error("Error restocking sweet");
+    }
   };
 
   return (
@@ -65,20 +121,44 @@ const AdminPanel = () => {
         </button>
       </form>
 
+      <SweetSearch setSweets={setSweets} />
+
       <h3 className="font-semibold mb-2 ">Existing Sweets:</h3>
-      {sweets.map((s) => (
-        <div key={s._id} className="border p-2 mb-2 flex justify-between">
-          <div>
-            {s.name} - ₹{s.price} (Qty: {s.quantity})
-          </div>
-          <button
-            onClick={() => deleteSweet(s._id)}
-            className="bg-red-500 text-white px-2 rounded"
-          >
-            Delete
-          </button>
-        </div>
-      ))}
+      {sweets.length === 0 ? (
+        <p>No sweets available.</p>
+      ) : (
+        <ul>
+          {sweets.map((sweet) => (
+            <li
+              key={sweet._id}
+              className="flex justify-between items-center border-b py-2"
+            >
+              <div>
+                {sweet.name} - {sweet.category} - ${sweet.price} - Qty:{" "}
+                {sweet.quantity}
+              </div>
+              <button
+                onClick={() => updateSweet(sweet._id, sweet)}
+                className="bg-yellow-500 text-white px-3 py-1"
+              >
+                Update
+              </button>
+              <button
+                className="bg-blue-500 text-white px-3 py-1"
+                onClick={() => restockSweet(sweet._id, sweet)}
+              >
+                Restock
+              </button>
+              <button
+                onClick={() => deleteSweet(sweet._id)}
+                className="bg-red-500 text-white px-3 py-1"
+              >
+                Delete
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

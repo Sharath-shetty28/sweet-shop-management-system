@@ -1,4 +1,4 @@
-import User from "../models/user.js";
+import User from "../models/userModel.js";
 import { generateAccessToken } from "../utils/tokenGenerator.js";
 
 export const registerUser = async (req, res) => {
@@ -70,7 +70,10 @@ export const loginUser = async (req, res) => {
 
     res
       .status(200)
-      .json({ success: true, user: { email: user.email, name: user.name } });
+      .json({
+        success: true,
+        user: { email: user.email, name: user.name, role: user.role },
+      });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
