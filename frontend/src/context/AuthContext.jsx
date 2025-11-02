@@ -27,7 +27,6 @@ export const AuthProvider = ({ children }) => {
     checkAuth();
   }, []);
 
-
   const isAdmin = () => authUser?.role === "admin";
 
   const register = async (data) => {
@@ -65,8 +64,11 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await api.post("/auth/logout");
-      setAuthUser(null);
+      const res = await api.post("/auth/logout");
+      if (res.data.success) {
+        setAuthUser(null);
+      }
+
       toast.success("Logged out successfully!");
       return { success: true };
     } catch (err) {

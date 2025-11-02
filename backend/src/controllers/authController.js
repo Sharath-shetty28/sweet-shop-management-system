@@ -68,12 +68,10 @@ export const loginUser = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    res
-      .status(200)
-      .json({
-        success: true,
-        user: { email: user.email, name: user.name, role: user.role },
-      });
+    res.status(200).json({
+      success: true,
+      user: { email: user.email, name: user.name, role: user.role },
+    });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
@@ -90,6 +88,21 @@ export const isAuth = async (req, res) => {
         .json({ success: false, message: "User not found" });
 
     return res.json({ success: true, user });
+  } catch (error) {
+    console.log(error.message);
+    res.json({ success: false, message: error.message });
+  }
+};
+
+export const logout = async (req, res) => {
+  try {
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+      path: "/",
+    });
+    return res.json({ success: true, message: "Logged Out" });
   } catch (error) {
     console.log(error.message);
     res.json({ success: false, message: error.message });
