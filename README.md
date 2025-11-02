@@ -74,3 +74,83 @@ npm install
 # Create .env file
 touch .env
 ```
+
+# .env
+```
+PORT=5000
+MONGO_URI=mongodb://127.0.0.1:27017/sweetshop
+JWT_SECRET=jwtsecretkey
+CORS_ORIGIN=http://localhost:5173
+
+```
+
+# Run Backend
+```
+npm run dev
+```
+
+# 🖥 Frontend Setup
+```
+cd ../frontend
+npm install
+npm run dev
+```
+
+- Frontend: http://localhost:5173
+- Backend: http://localhost:5000
+
+# 🧩 User Roles
+
+  | Role      | Capabilities                      |
+| --------- | --------------------------------- |
+| **User**  | View sweets, search, and purchase |
+| **Admin** | Add, edit, delete, restock sweets |
+
+
+# 🖼️ Screenshots
+
+
+# 🧠 My AI Usage
+
+# 🧩 Tools Used
+- ChatGPT (OpenAI GPT-5)
+- GitHub Copilot
+
+# 💬 How I Used AI
+- ChatGPT helped generate initial backend boilerplate for routes, controllers, and middleware logic.
+- Used AI for debugging CORS with credentials, cookie handling, and protected route logic.
+- Copilot assisted with repetitive JSX structure generation in the frontend (forms, modals, etc.).
+- Asked AI for UI improvement suggestions to make the dashboard responsive and modern.
+
+# ✨ Reflection
+
+AI tools helped speed up development, especially during setup and refactoring.
+However, I manually reviewed and validated all AI-generated code for correctness, security, and readability.
+This experience strengthened my understanding of how to collaborate effectively with AI while maintaining code ownership and integrity.
+
+# 🧾 Commit Example
+```
+feat: Complete Sweet Shop Management System MVP
+Implemented full-stack functionality including authentication, protected routes,
+CORS with cookies, and all CRUD operations for sweets and inventory.
+Integrated a responsive and user-friendly frontend UI with admin and user dashboards.
+Used an AI assistant to assist in initial component generation and UI polish.
+Co-authored-by: AI Tool Name <AI@users.noreply.github.com>
+
+```
+
+# 🧪 Test Report
+
+```
+npm test
+
+```
+# 🏁 Conclusion
+
+This project demonstrates a complete TDD-based full-stack system, built with clean architecture, JWT authentication, and AI-assisted workflow.
+It’s production-ready, modular, and extensible for future enhancements.
+
+# 💖 Thank You!
+
+Thank you for checking out this project!
+If you liked it, don’t forget to ⭐ the repo — your support means a lot!
