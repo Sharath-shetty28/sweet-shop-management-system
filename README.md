@@ -27,6 +27,14 @@ It demonstrates skills in **API development**, **database management**, **fronte
 
 ## 🧠 Core Features
 
+- Product Management: Add, update, delete, and search sweet products with category organization
+- Customer Management: Maintain customer database with contact information
+- Order Processing: Create and manage orders with automatic inventory updates
+- Inventory Control: Track stock levels with low-stock alerts and restocking capabilities
+- User Authentication: Secure login/logout with password hashing
+- Role-Based Access: Admin and regular user roles with different permissions
+- Dashboard Analytics: Real-time statistics for revenue, orders, and inventory
+
 ### 👤 Authentication
 - User **registration** and **login**
 - JWT stored securely in HTTP-only cookies
@@ -98,6 +106,18 @@ npm run dev
 
 - Frontend: http://localhost:5173
 - Backend: http://localhost:5000
+
+# Default Login Credentials
+
+Admin Account:
+
+- Username: admin@gmail.com
+- Password: shetty
+  
+Regular User Account:
+
+Username: sharathshetty301@gmail.com
+Password: shetty
 
 # 🧩 User Roles
 
@@ -174,4 +194,5 @@ It’s production-ready, modular, and extensible for future enhancements.
 
 Thank you for checking out this project!
 If you liked it, don’t forget to ⭐ the repo — your support means a lot!
+
 
