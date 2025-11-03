@@ -30,7 +30,6 @@ This project was developed following **Test-Driven Development (TDD)** principle
 - Jest / Supertest (for backend tests)
 - Postman (API testing)
 - Git & GitHub (version control)
-- Render / Vercel (deployment)
 - VS Code (development)
 - ChatGPT / GitHub Copilot (AI assistance)
 
@@ -302,6 +301,7 @@ Sharath Shetty
 
 Thank you for checking out this project!
 If you liked it, don’t forget to ⭐ the repo — your support means a lot!
+
 
 
 
