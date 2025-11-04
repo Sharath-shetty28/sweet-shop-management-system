@@ -1,6 +1,7 @@
 // src/controllers/sweetController.js
 import Sweet from "../models/sweetModel.js";
 import Purchase from "../models/purchaseModel.js";
+import { calculateDiscount } from "../utils/discount.js";
 
 export const addSweet = async (req, res) => {
   try {
@@ -115,10 +116,7 @@ export const purchaseSweet = async (req, res) => {
     if (sweet.quantity < quantity)
       return res.status(400).json({ message: "Insufficient stock" });
 
-    // Apply discount
-    let discount = 0;
-    if (quantity >= 10) discount = 0.2;
-    else if (quantity >= 5) discount = 0.1;
+    const discount = calculateDiscount(quantity);
 
     const totalPrice = sweet.price * quantity * (1 - discount);
 
