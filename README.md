@@ -1,10 +1,10 @@
-# 🍬 TDD Kata: Sweet Shop Management System
+#   Sweet Shop Management System (MERN Stack)
 
-## 🧁 Objective
+### 🚀 Project Overview
+The **Sweet Shop Management System** is a full-stack web application built using the **MERN stack** (MongoDB, Express.js, React.js, Node.js).  
+It enables users to register, log in, browse available sweets, purchase items, and for admins to manage inventory through secure RESTful APIs.
 
-The goal of this project is to design, build, and test a **full-stack Sweet Shop Management System**.  
-It demonstrates skills in **API development**, **database management**, **frontend implementation**, **testing**, and **modern development workflows** — including the effective use of **AI tools**.
-
+This project was developed following **Test-Driven Development (TDD)** principles and includes **AI-assisted development** for faster and cleaner implementation.
 ---
 
 ## 🚀 Tech Stack
@@ -23,9 +23,106 @@ It demonstrates skills in **API development**, **database management**, **fronte
 - **Tailwind CSS** for styling
 - **React Toastify** for notifications
 
+### **Database**
+- MongoDB 
+
+### **Testing & Tools**
+- Jest / Supertest (for backend tests)
+- Postman (API testing)
+- Git & GitHub (version control)
+- VS Code (development)
+- ChatGPT / GitHub Copilot (AI assistance)
+
+
+---
+
+# Folder Structure
+```
++---backend
+|   |   .env
+|   |   babel.config.cjs
+|   |   package-lock.json
+|   |   package.json
+|   |   server.js
+|   |   
+|   \---src
+|       |   app.js
+|       |   
+|       +---config
+|       |       db.js
+|       |       
+|       +---controllers
+|       |       authController.js
+|       |       sweetController.js
+|       |       
+|       +---middlewares
+|       |       authMiddleware.js
+|       |       
+|       +---models
+|       |       purchaseModel.js
+|       |       sweetModel.js
+|       |       userModel.js
+|       |       
+|       +---routes
+|       |       authRoutes.js
+|       |       sweetRoutes.js
+|       |       
+|       +---tests
+|       |       auth.test.js
+|       |       sweet.test.js
+|       |       
+|       \---utils
+|               tokenGenerator.js
+|               
+\---frontend
+    |   .env
+    |   .gitignore
+    |   eslint.config.js
+    |   index.html
+    |   package-lock.json
+    |   package.json
+    |   README.md
+    |   vercel.json
+    |   vite.config.js
+    |   
+    +---public
+    \---src
+        |   App.jsx
+        |   index.css
+        |   main.jsx
+        |   
+        +---api
+        |       axios.js
+        |       
+        +---components
+        |       ProtectedRoute.jsx
+        |       SweetCard.jsx
+        |       SweetSearch.jsx
+        |       
+        +---context
+        |       AuthContext.jsx
+        |       
+        \---pages
+                AdminPanel.jsx
+                Dashboard.jsx
+                Login.jsx
+                NotFound.jsx
+                Register.jsx
+                
+
+
+```
 ---
 
 ## 🧠 Core Features
+
+- Product Management: Add, update, delete, and search sweet products with category organization
+- Customer Management: Maintain customer database with contact information
+- Order Processing: Create and manage orders with automatic inventory updates
+- Inventory Control: Track stock levels with low-stock alerts and restocking capabilities
+- User Authentication: Secure login/logout with password hashing
+- Role-Based Access: Admin and regular user roles with different permissions
+- Dashboard Analytics: Real-time statistics for revenue, orders, and inventory
 
 ### 👤 Authentication
 - User **registration** and **login**
@@ -99,6 +196,18 @@ npm run dev
 - Frontend: http://localhost:5173
 - Backend: http://localhost:5000
 
+# Default Login Credentials
+
+Admin Account:
+
+- Username: admin@gmail.com
+- Password: shetty
+  
+Regular User Account:
+
+- Username: sharathshetty301@gmail.com
+- Password: shetty
+
 # 🧩 User Roles
 
   | Role      | Capabilities                      |
@@ -159,19 +268,41 @@ Co-authored-by: AI Tool Name <AI@users.noreply.github.com>
 
 ```
 
-# 🧪 Test Report
 
-```
-npm test
+## 🧪 Test-Driven Development (TDD)
+This project follows a **Red-Green-Refactor** cycle:
+1. Write a failing test (Red)  
+2. Implement the feature (Green)  
+3. Refactor the code for clarity and performance  
 
+Test cases cover:
+- User authentication flow  
+- Protected route access  
+- CRUD operations for sweets  
+- Inventory updates  
+
+Run backend tests:
+```bash
+npm run test
 ```
+
 # 🏁 Conclusion
 
 This project demonstrates a complete TDD-based full-stack system, built with clean architecture, JWT authentication, and AI-assisted workflow.
 It’s production-ready, modular, and extensible for future enhancements.
 
+
+# 🧑‍💻Author
+
+Sharath Shetty
+🌐 Portfolio : https://sharathshetty.me
+
 # 💖 Thank You!
 
 Thank you for checking out this project!
 If you liked it, don’t forget to ⭐ the repo — your support means a lot!
+
+
+
+
 
